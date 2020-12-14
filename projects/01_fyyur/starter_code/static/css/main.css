@@ -209,3 +209,11 @@ h2.monospace {
 .subtitle {
   opacity: 0.5;
 }
+
+#edit_entry, #delete_entry{
+  margin-top: 10px;
+}
+
+#delete_entry input{
+  width: 50px;
+}

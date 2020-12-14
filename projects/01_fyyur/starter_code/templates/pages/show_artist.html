@@ -11,7 +11,7 @@
 		</p>
 		<div class="genres">
 			{% for genre in artist.genres %}
-			<span class="genre">{{ genre }}</span>
+			<span class="genre">{{ genre }}<y mi/span>
 			{% endfor %}
 		</div>
 		<p>
@@ -41,6 +41,14 @@
 	</div>
 	<div class="col-sm-6">
 		<img src="{{ artist.image_link }}" alt="Venue Image" />
+		<div id="edit_entry">
+			<a href="/artists/{{ artist.id}}/edit"><button class="btn btn-primary btn-lg">Edit Artist</button></a>
+		</div>
+		<div id="delete_entry">
+			<label for="delete_artist">Confirm the Artist id:</label><br>
+			<input id="delete_artist" type="number">
+			<button class="btn btn-primary btn-lg" id="{{artist.id}}">Delete Artist</button>
+		</div>
 	</div>
 </div>
 <section>
@@ -71,6 +79,33 @@
 		{% endfor %}
 	</div>
 </section>
+
+<script>
+	const delete_artist = document.getElementById("delete_entry").querySelector("button");
+	const confirm_id = document.getElementById('delete_artist').value;
+    delete_artist.onclick = (e) =>{
+		const artist_id = e.target.id;
+	fetch('/artists/'+ artist_id, {
+		method: 'DELETE',
+		body : JSON.stringify({
+			'confirm_id' : confirm_id
+		}),
+		headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => {
+		return response.json()
+	})
+	.then((response_json) => {
+		document.location.href = '/';
+	})
+    .catch((error) => {
+        console.log(error)
+    })
+
+	}
+</script>
 
 {% endblock %}
 
